@@ -1,10 +1,17 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"net"
+	_ "os/exec"
+)
 
 /*
 Go语言是静态类型语言，因此变量（variable）是有明确类型的，编译器也会检查变量类型的正确性。在数学概念中，变量表示没有固定值且可改变的数。但从
 计算机系统实现角度来看，变量是一段或多段用来存储数据的内存。
+
+Go语言的词法元素包括 5 种，分别是标识符（identifier）、关键字（keyword）、操作符（operator）、分隔符（delimiter）、字面量（literal），它们是
+组成Go语言代码和程序的最基本单位。
 
 静态语言和动态语言的区别：
 静态语言：
@@ -17,14 +24,36 @@ func main() {
 		1.定义变量
 		1.1 标准格式：var name type
 		var：是声明变量的关键字
-		name：是变量名（标识符：有非数字开头，字母，数字，下划线组成,尽量见名知意）
+		name：是变量名（标识符，并且严格区分大小写,首字母大写为共有，小写为私有）
 		type：是变量的类型
+		关于标识符：
+		由 26 个英文字母、0~9、_组成；
+		不能以数字开头，例如 var 1num int 是错误的；
+		Go语言中严格区分大小写；
+		标识符不能包含空格；
+		不能以系统保留关键字作为标识符。
+		关键字（25）：break default func interface select
+		case defer go map struct
+		chan else goto package switch
+		const fallthrough if range type
+		continue for import return var
+		预定义标识符：append bool byte cap close complex complex64 complex128 uint16
+		copy false float32 float64 imag int int8 int16 uint32
+		int32 int64 iota len make new nil panic uint64
+		print println real recover string true uint uint8 uintptr
+
+		命名标识符时还需要注意以下几点：
+		标识符的命名要尽量采取简短且有意义；
+		不能和标准库中的包名重复；
+		为变量、函数、常量命名时采用驼峰命名法，
+
 		1.2 批量格式
 			var(
 				name_1 type
 				name_2 type
 			)
 		var 形式的声明语句往往是用于需要显式指定变量类型地方，或者因为变量稍后会被重新赋值而初始值无关紧要的地方。
+
 		1.3 简短格式
 		name:= express 或 name_1,name_2:= express_1,express_2
 		需要注意的是，简短模式（short variable declaration）有以下限制：
@@ -52,9 +81,11 @@ func main() {
 		2.变量初始化
 		2.1变量初始化的标准格式
 		var name type = express
+
 		2.2编译器推导类型的格式
 		var name=express
-		编译器会尝试根据等号右边的表达式推导 hp 变量的类型,等号右边的部分在编译原理里被称做右值（rvalue）。
+		编译器会尝试根据等号右边的表达式推导name变量的类型,等号右边的部分在编译原理里被称做右值（rvalue）。
+
 		2.3短变量声明并初始化
 		name_1,name_2:=express_1,express_2
 	*/
@@ -91,4 +122,21 @@ func main() {
 	m=m^n
 	*/
 	fmt.Println(m, n)
+
+	/*
+		5.匿名变量:
+		在编码过程中，可能会遇到没有名称的变量、类型或方法。虽然这不是必须的，但有时候这样做可以极大地增强代码的灵活性，这些变量被统称为匿
+		名变量。
+
+		5.1"_"接受匿名变量，相当于是占位符
+		_ 匿名变量，丢弃数据不进行处理, _匿名变量配合函数返回值使用才有价值。
+		匿名变量不占用内存空间，不会分配内存。匿名变量与匿名变量之间也不会因为多次声明而无法使用。
+
+		5.2"_"导包的时候使用
+		import 下划线的作用：当导入一个包时，该包下的文件里所有init()函数都会被执行，然而，有些时候我们并不需要把整个包都导入进
+		来，仅仅是是希望它执行init()函数而已。这个时候就可以使用 import 引用该包。即使用【import _ 包路径】只是引用该包，仅仅是为了调用init()函数，所以
+		无法通过包名来调用包中的其他函数。
+	*/
+	conn, _ := net.Dial("tcp", "127.0.0.1:8080")
+	fmt.Println(conn)
 }
