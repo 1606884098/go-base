@@ -19,7 +19,7 @@ Go语言的词法元素包括 5 种，分别是标识符（identifier）、关�
 动态语言：
 不需要直接指定变量类型，在解释的时候，转换为目标代码和运行程序一步到位，比如Python、Ruby、Perl.可以在运行时改变结构.
 */
-func main() {
+func main1() {
 	/*
 		1.定义变量
 		1.1 标准格式：var name type
