@@ -1,4 +1,4 @@
-package gobase05_func
+package gobase04_func
 
 import "testing"
 
