@@ -11,7 +11,7 @@ import (
 	"os/exec"
 )
 
-func main() {
+func main1() {
 	//1.windows进程使用
 	create_windows_process() //创建进程
 	Stdout_do()
