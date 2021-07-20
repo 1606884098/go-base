@@ -13,15 +13,15 @@ import (
 
 func main1() {
 	//1.windows进程使用
-	create_windows_process() //创建进程
-	Stdout_do()
-	pipe_mathod()     //windows管道的使用
-	process_message() //关于进程信息
+	createWindowsProcess() //创建进程
+	StdoutDo()
+	pipeMathod()     //windows管道的使用
+	processMessage() //关于进程信息
 	//2.linux进程使用
-	create_linux_process()
+	createLinuxProcess()
 }
 
-func create_linux_process() {
+func createLinuxProcess() {
 	cmd := exec.Command("ls", "-lah")
 	fmt.Println(cmd.Process.Pid) //进程的pid
 	cmd.Stdout = os.Stdout       //system output
@@ -36,21 +36,21 @@ func create_linux_process() {
 	}
 }
 
-func Stdout_do() {
+func StdoutDo() {
 	//关于stdout的用法
 	cmd_1 := exec.Command("ping", "www.baidu.com")
 	var stdout, stderr bytes.Buffer //创建二进制输入，区别输出，区别错误
 	cmd_1.Stdout = &stdout          //设定输出错误，输出
 	cmd_1.Stderr = &stderr
 	cmd_1.Run() //执行命令
-	res_1, _ := GBK_to_UTF8(stdout.Bytes())
-	res_2, _ := GBK_to_UTF8(stdout.Bytes())
+	res_1, _ := GBKToUTF8(stdout.Bytes())
+	res_2, _ := GBKToUTF8(stdout.Bytes())
 	outstr, errstr := string(res_1), string(res_2)
 	fmt.Println(outstr)
 	fmt.Println(errstr) //错误的输出是为linux命令
 }
 
-func create_windows_process() {
+func createWindowsProcess() {
 	//cmd:=exec.Command("nodepad")//返回的是一个命令
 	//cmd:=exec.Command("nodepad","文件的了路径")//用nodepad打开后面路径的文件
 	//err:=cmd.Run()//执行命令
@@ -60,7 +60,7 @@ func create_windows_process() {
 	if err != nil {
 		fmt.Println(err)
 	} else {
-		res, err := GBK_to_UTF8(out)
+		res, err := GBKToUTF8(out)
 		if err != nil {
 			fmt.Printf("转码失败", err)
 		} else {
@@ -70,7 +70,7 @@ func create_windows_process() {
 	}
 }
 
-func process_message() {
+func processMessage() {
 	os.Setenv("NAME", "环境变量的值")                        //设置环境变量
 	cmd := exec.Command("echo", os.ExpandEnv("$NAME")) //抓取环境变量
 	cmd.Run()
@@ -81,7 +81,7 @@ func process_message() {
 	cmd.Process.Kill()           //杀进程  等等进程信息
 }
 
-func pipe_mathod() {
+func pipeMathod() {
 	cmd := exec.Command("echo", "fdafdsafdsf")
 	stdout, _ := cmd.StdoutPipe() //创建管道
 	cmd.Start()
@@ -97,7 +97,7 @@ func pipe_mathod() {
 }
 
 //gbk转utf8
-func GBK_to_UTF8(s []byte) ([]byte, error) {
+func GBKToUTF8(s []byte) ([]byte, error) {
 	reader := transform.NewReader(bytes.NewReader(s), simplifiedchinese.GBK.NewDecoder())
 	d, e := ioutil.ReadAll(reader)
 	if e != nil {
@@ -107,7 +107,7 @@ func GBK_to_UTF8(s []byte) ([]byte, error) {
 }
 
 //utf8转gbk
-func UTF8_to_GBK(s []byte) ([]byte, error) {
+func UTF8ToGBK(s []byte) ([]byte, error) {
 	reader := transform.NewReader(bytes.NewReader(s), simplifiedchinese.GBK.NewEncoder())
 	d, e := ioutil.ReadAll(reader)
 	if e != nil {
