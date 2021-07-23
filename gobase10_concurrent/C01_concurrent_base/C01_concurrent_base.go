@@ -1,4 +1,4 @@
-package main
+package C01_concurrent_base
 
 import (
 	"bufio"

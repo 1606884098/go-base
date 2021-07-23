@@ -1,4 +1,4 @@
-package main
+package C03_channel
 
 import "fmt"
 

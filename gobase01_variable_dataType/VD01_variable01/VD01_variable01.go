@@ -1,4 +1,4 @@
-package main
+package VD01_variable01
 
 import (
 	"fmt"

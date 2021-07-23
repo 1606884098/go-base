@@ -1,4 +1,4 @@
-package gobase04_func
+package demo
 
 func GetArea(weight int, height int) int {
 	return weight * height

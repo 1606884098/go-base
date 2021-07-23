@@ -1,4 +1,4 @@
-package main
+package VD02_const01
 
 import (
 	"fmt"

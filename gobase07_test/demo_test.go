@@ -1,6 +1,8 @@
-package gobase04_func
+package demo
 
-import "testing"
+import (
+	"testing"
+)
 
 //1.功能测试
 func TestGetArea(t *testing.T) {
