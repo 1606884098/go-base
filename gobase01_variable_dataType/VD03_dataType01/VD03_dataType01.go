@@ -1,4 +1,4 @@
-package VD03_dataType01
+package main
 
 import (
 	cc "container/list"
