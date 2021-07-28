@@ -1,4 +1,4 @@
-package VD01_variable01
+package main
 
 import (
 	"fmt"
@@ -19,7 +19,7 @@ Go语言的词法元素包括 5 种，分别是标识符（identifier）、关�
 动态语言：
 不需要直接指定变量类型，在解释的时候，转换为目标代码和运行程序一步到位，比如Python、Ruby、Perl.可以在运行时改变结构.
 */
-func main1() {
+func main() {
 	/*
 		1.定义变量
 		1.1 标准格式：var name type
@@ -139,4 +139,14 @@ func main1() {
 	*/
 	conn, _ := net.Dial("tcp", "127.0.0.1:8080")
 	fmt.Println(conn)
+
+	var a1 int = 10
+	var a2 int = 20
+	swap(&a1, &a2)
+	fmt.Printf("a1=%d,a2=%d\n", a1, a2)
+}
+
+func swap(i *int, i2 *int) {
+	*i, *i2 = *i2, *i
+	fmt.Printf("i=%d,i2=%d\n", *i, *i2)
 }
