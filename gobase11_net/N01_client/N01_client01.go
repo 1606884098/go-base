@@ -5,7 +5,7 @@ import (
 	"net"
 )
 
-func main() {
+func main1() {
 
 	// 主动发起连接请求
 	conn, err := net.Dial("tcp", "127.0.0.1:8000")

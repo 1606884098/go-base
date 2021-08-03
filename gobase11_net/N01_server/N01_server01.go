@@ -5,15 +5,20 @@ import (
 	"net"
 )
 
-func main() {
+func main1() {
 	// 创建监听
-	listener, err := net.Listen("tcp", ":8000")
+	listener, err := net.Listen("tcp", "127.0.0.1:8000")
 	if err != nil {
 		fmt.Println("listen err:", err)
 		return
 	}
 	defer listener.Close() // 主协程结束时，关闭listener
 	fmt.Println("服务器等待客户端建立连接...")
+
+	/*
+		Accept()函数的作用是等待客户端的链接，如果客户端没有链接，该方法会阻塞。如果有客户端链接，那么该方
+		法返回一个Socket负责与客户端进行通信。所以，每来一个客户端，该方法就应该返回一个Socket与其通信
+	*/
 	// 等待客户端连接请求
 	conn, err := listener.Accept()
 	if err != nil {
