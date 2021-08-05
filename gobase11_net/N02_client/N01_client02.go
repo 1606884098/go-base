@@ -6,6 +6,16 @@ import (
 	"os"
 )
 
+/*
+关于聊天软件：
+飞秋是根据是固定ip，局域网可可用，原来就是两个客户端tcp通讯
+qq 微信不一样通过服务器连接。然后通过服务器中转  比如可以将qq号与连接对应  在服务器中转
+11-conn
+22-conn
+首先用一个协程将上线的好放入map 管理连接
+当 11 和22都上线了
+11发消息给22时   11发送消息到服务器  服务器读取到消息 找到22-conn的连接，然后将消息写到22的conn里发送到22
+*/
 func main() {
 	// 主动发起连接请求
 	conn, err := net.Dial("tcp", "127.0.0.1:8000")
@@ -32,7 +42,8 @@ func main() {
 			}
 		}
 	}()
-
+	//获取客户端的网络地址信息
+	addr := conn.RemoteAddr().String()
 	// 主协程，接收服务器回发数据，打印至屏幕
 	buf := make([]byte, 1024) // 定义用于存储服务器回发数据的切片缓冲区
 	for {
@@ -41,7 +52,7 @@ func main() {
 			fmt.Println("conn.Read err:", err)
 			return
 		}
-		fmt.Printf("服务器回发：%s\n", string(buf[:n]))
+		fmt.Printf("[%s]: %s\n", addr, string(buf[:n]))
 	}
 
 }

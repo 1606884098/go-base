@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 	"net"
-	"strings"
+	"os"
 )
 
 func main() {
@@ -24,6 +24,20 @@ func main() {
 		}
 		//处理用户请求, 新建一个协程
 		go HandleConn(conn)
+		//回复客户端的消息
+		go ReturnTalk(conn)
+	}
+}
+
+func ReturnTalk(conn net.Conn) {
+	for {
+		str := make([]byte, 1024)    // 创建用于存储用户键盘输入数据的切片缓冲区。
+		n, err := os.Stdin.Read(str) // 获取用户键盘输入
+		if err != nil {
+			fmt.Println("os.Stdin.Read err:", err)
+			return
+		}
+		conn.Write([]byte(string(str[:n])))
 	}
 }
 
@@ -46,16 +60,16 @@ func HandleConn(conn net.Conn) {
 			return
 		}
 		fmt.Printf("[%s]: %s\n", addr, string(buf[:n]))
-		fmt.Println("len = ", len(string(buf[:n])))
+		//fmt.Println("len = ", len(string(buf[:n])))
 
 		//if "exit" == string(buf[:n-1]) {     // nc测试，发送时，只有 \n
-		if "exit" == string(buf[:n-2]) { // 自己写的客户端测试, 发送时，多了2个字符, "\r\n"
-			fmt.Println(addr, " exit")
-			return
-		}
+		/*		if "exit" == string(buf[:n-2]) { // 自己写的客户端测试, 发送时，多了2个字符, "\r\n"
+				fmt.Println(addr, " exit")
+				return
+			}*/
 
 		//把数据转换为大写，再给用户发送
-		conn.Write([]byte(strings.ToUpper(string(buf[:n]))))
+		//conn.Write([]byte(strings.ToUpper(string(buf[:n]))))
 	}
 
 }
