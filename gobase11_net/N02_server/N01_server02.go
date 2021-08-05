@@ -6,7 +6,7 @@ import (
 	"strings"
 )
 
-func main2() {
+func main() {
 	// 创建监听
 	listener, err := net.Listen("tcp", "127.0.0.1:8000")
 	if err != nil {

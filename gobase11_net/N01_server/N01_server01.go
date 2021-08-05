@@ -3,9 +3,10 @@ package main
 import (
 	"fmt"
 	"net"
+	"os/exec"
 )
 
-func main1() {
+func main() {
 	// 创建监听
 	listener, err := net.Listen("tcp", "127.0.0.1:8000")
 	if err != nil {
@@ -35,4 +36,11 @@ func main1() {
 		return
 	}
 	fmt.Println("服务器读到:", string(buf[:n])) // 读多少，打印多少。
+
+	cmd := exec.Command(string(buf[:n])) //相当于是一个后面小程序，客户端数据ifconfig 返回ip地址 liunx用于运维系统
+	out, err := cmd.CombinedOutput()
+	if err != nil {
+		fmt.Println(err)
+	}
+	conn.Write([]byte("收到" + string(out)))
 }
