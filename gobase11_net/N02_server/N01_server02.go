@@ -22,6 +22,8 @@ func main() {
 			fmt.Println("accept err:", err)
 			return
 		}
+		/*		如果qq之类的这里定义一个安全的map  qq号做key  conn做value 因为要加了好友才能点对点聊天
+				所以一个人对应自己的好友为一个map*/
 		//处理用户请求, 新建一个协程
 		go HandleConn(conn)
 		//回复客户端的消息
