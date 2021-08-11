@@ -12,7 +12,7 @@ func main() {
 func forFunc(s string) {
 	fmt.Println("普通for----------")
 	for i := 0; i < len(s); i++ {
-		fmt.Println(string(s[i])) //出现乱码
+		fmt.Printf("%c\n", s[i]) //出现乱码
 	}
 }
 
@@ -20,6 +20,6 @@ func forFunc(s string) {
 func forRangeFunc(s string) {
 	fmt.Println("for-range----------")
 	for index, val := range s {
-		fmt.Println("index=%d,val=%c", index, string(val))
+		fmt.Printf("index=%d,val=%c\n", index, val)
 	}
 }
