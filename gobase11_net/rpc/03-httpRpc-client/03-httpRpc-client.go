@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"net/rpc"
 )
@@ -9,8 +10,14 @@ type HelloServiceClient struct {
 	*rpc.Client
 }
 
-var _ HelloServiceInterface = (*HelloServiceClient)(nil)
+const HelloServiceName = "path/to/pkg.HelloService" //服务名
 
+type HelloServiceInterface = interface { //接口
+	Hello(request string, reply *string) error
+}
+
+var _ HelloServiceInterface = (*HelloServiceClient)(nil) //匿名变量
+//远程调用
 func DialHelloService(network, address string) (*HelloServiceClient, error) {
 	c, err := rpc.Dial(network, address)
 	if err != nil {
@@ -18,6 +25,8 @@ func DialHelloService(network, address string) (*HelloServiceClient, error) {
 	}
 	return &HelloServiceClient{Client: c}, nil
 }
+
+//调用实际方法
 func (p *HelloServiceClient) Hello(request string, reply *string) error {
 	return p.Client.Call(HelloServiceName+".Hello", request, reply)
 }
@@ -32,5 +41,5 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-
+	fmt.Println(reply)
 }
