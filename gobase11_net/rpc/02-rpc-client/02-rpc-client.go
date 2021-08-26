@@ -3,7 +3,9 @@ package main
 import (
 	"fmt"
 	"log"
+	"net"
 	"net/rpc"
+	"net/rpc/jsonrpc"
 )
 
 type HelloServiceClient struct {
@@ -32,27 +34,27 @@ func (p *HelloServiceClient) Hello(request string, reply *string) error {
 }
 
 func main() {
-	client, err := DialHelloService("tcp", "localhost:1234")
-	if err != nil {
-		log.Fatal("dialing:", err)
-	}
-	var reply string
-	err = client.Hello("hello", &reply)
-	if err != nil {
-		log.Fatal(err)
-	}
-	fmt.Println(reply)
-
-	//跨语言rpc
-	/*	conn, err := net.Dial("tcp", "localhost:1234")
+	/*	client, err := DialHelloService("tcp", "localhost:1234")
 		if err != nil {
-			log.Fatal("net.Dial:", err)
+			log.Fatal("dialing:", err)
 		}
-		client := rpc.NewClientWithCodec(jsonrpc.NewClientCodec(conn))
 		var reply string
-		err = client.Call("HelloService.Hello", "hello", &reply)
+		err = client.Hello("TTTT", &reply)
 		if err != nil {
 			log.Fatal(err)
 		}
 		fmt.Println(reply)*/
+
+	//跨语言rpc
+	conn, err := net.Dial("tcp", "localhost:8888")
+	if err != nil {
+		log.Fatal("net.Dial:", err)
+	}
+	client1 := rpc.NewClientWithCodec(jsonrpc.NewClientCodec(conn))
+	var reply1 string
+	err = client1.Call("HelloService.Hello", "我是跨语言", &reply1)
+	if err != nil {
+		log.Fatal(err)
+	}
+	fmt.Println(reply1)
 }

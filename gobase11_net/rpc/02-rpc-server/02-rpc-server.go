@@ -4,6 +4,7 @@ import (
 	"log"
 	"net"
 	"net/rpc"
+	"net/rpc/jsonrpc"
 )
 
 const HelloServiceName = "path/to/pkg.HelloService" //服务名
@@ -24,20 +25,7 @@ func (p *HelloService) Hello(request string, reply *string) error {
 }
 
 func main() {
-	RegisterHelloService(new(HelloService))
-	listener, err := net.Listen("tcp", ":1234")
-	if err != nil {
-		log.Fatal("ListenTCP error:", err)
-	}
-	for {
-		conn, err := listener.Accept()
-		if err != nil {
-			log.Fatal("Accept error:", err)
-		}
-		go rpc.ServeConn(conn)
-	}
-	//跨语言rpc
-	/*	rpc.RegisterName("HelloService", new(HelloService))
+	/*	RegisterHelloService(new(HelloService))
 		listener, err := net.Listen("tcp", ":1234")
 		if err != nil {
 			log.Fatal("ListenTCP error:", err)
@@ -47,8 +35,21 @@ func main() {
 			if err != nil {
 				log.Fatal("Accept error:", err)
 			}
-			go rpc.ServeCodec(jsonrpc.NewServerCodec(conn))
+			go rpc.ServeConn(conn)
 		}*/
+	//跨语言rpc
+	rpc.RegisterName("HelloService", new(HelloService))
+	listener1, err := net.Listen("tcp", ":8888")
+	if err != nil {
+		log.Fatal("ListenTCP error:", err)
+	}
+	for {
+		conn, err := listener1.Accept()
+		if err != nil {
+			log.Fatal("Accept error:", err)
+		}
+		go rpc.ServeCodec(jsonrpc.NewServerCodec(conn))
+	}
 
 }
 
