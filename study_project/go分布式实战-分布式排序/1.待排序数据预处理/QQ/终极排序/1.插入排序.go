@@ -15,7 +15,7 @@ import "fmt"
 func SimpleInsert(arr []int) []int {
 	backup := arr[3]
 	j := 3 - 1                      //上一个位置开始循环
-	for j >= 0 && backup < arr[j] { //从前往后移动
+	for j >= 0 && backup < arr[j] { //从前往后移动,如果下标3的数是30排序是会失败的，需要再加for
 		arr[j+1] = arr[j] //从前往后移动
 		//1,19,29,8,3,7,4,6,5,10
 		//1,19,19,29,3,7,4,6,5,10
