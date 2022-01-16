@@ -11,7 +11,7 @@ func makearr1() []int {
 	var list []int
 	r := rand.New(rand.NewSource(time.Now().UnixNano()))
 	for i := 0; i < length; i++ {
-		list = append(list, int(r.Intn(1000)))
+		list = append(list, int(r.Intn(10)))
 	}
 	fmt.Println(list)
 	return list
@@ -42,9 +42,9 @@ func FindindexMid1(list []int, start int, end int, cur int) int {
 
 	//二分查找递归
 	if list[mid] > list[cur] {
-		return FindindexMid(list, start, mid, cur)
+		return FindindexMid1(list, start, mid, cur)
 	} else {
-		return FindindexMid(list, mid+1, end, cur)
+		return FindindexMid1(list, mid+1, end, cur)
 	}
 
 }
@@ -54,7 +54,8 @@ func FindindexMid1(list []int, start int, end int, cur int) int {
 // 1，2，4，5，6，7，8  ,9//  3
 
 func main() {
-	mylist := makearr1()
+	//一边排序一边插入
+	mylist := []int{4, 3, 8, 1, 6}
 	for i := 1; i < len(mylist); i++ {
 		//循环插入，寻找合适位置，
 		p := FindindexMid1(mylist, 0, i-1, i) //0,0,  0,1,  0,2,   0,3
