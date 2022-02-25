@@ -26,7 +26,7 @@ func main() {
 	for i := 0; i < 1024*1024; i++ {
 		arr[i] = i + 1 //给数组赋值
 	}
-	id := bin_search(arr, 1023440000000000)
+	id := bin_search(arr, 1023440)
 	if id != -1 {
 		fmt.Println("找到", id, arr[id])
 
