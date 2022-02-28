@@ -15,9 +15,9 @@ func main1() {
 	for i < length {
 		times := 1
 		password := mylist[i]
-		for i+1 < length && mylist[i] == mylist[i+1] { //没有冒出数据的极限，
+		for i+1 < length && mylist[i] == mylist[i+1] { //没有越界，
 			i++
-			times += 1
+			times += 1 //统计出现次数
 		}
 
 		fmt.Println(password, times)
@@ -66,11 +66,11 @@ func main() {
 	for i < length {
 		times := 1
 		password := dataarr[i]
-		for i+1 < length && dataarr[i] == dataarr[i+1] { //没有冒出数据的极限，
+		for i+1 < length && dataarr[i] == dataarr[i+1] { //没有越界，
 			i++
 			times += 1
 		}
-		fmt.Fprintln(save, password+" # "+strconv.Itoa(times))
+		fmt.Fprintln(save, password+" # "+strconv.Itoa(times)) //写入文件中
 
 		//fmt.Println(password,times)
 
