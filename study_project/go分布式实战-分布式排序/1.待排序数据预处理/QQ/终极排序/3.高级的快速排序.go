@@ -15,7 +15,7 @@ func main() {
 }
 
 func makeArr() []int { //造数组
-	var length = 100
+	var length = 101
 	var list []int
 	r := rand.New(rand.NewSource(time.Now().UnixNano()))
 	for i := 0; i < length; i++ {
@@ -84,8 +84,8 @@ func QuickSortFinal(arr []int, left int, right int) {
 		gt := right + 1                                   //arr[gt...right]>vdata   gt--
 		i := left + 1                                     // arr[lt+1, i] ==vdata   i++
 
-		//	4 7 8 9  4 1 2  3
-		//  i=1 vdata=4
+		//	假如arr=4 7 8 9  4 1 2  3
+		//  i=1 vdata=arr[[left]]=4
 		//	4 3 8 9  4 1 2 7
 		//  i=1 vdata=4
 		//	4 3 8 9  4 1 2 7
