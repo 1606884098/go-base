@@ -80,9 +80,9 @@ func QuickSortFinal(arr []int, left int, right int) {
 		//
 		SwapData(arr, left, rand.Int()%(right-left)+left) //任何一个位置，交换到第一个
 		vdata := arr[left]                                //备份中间值
-		It := left                                        // arr[left+1,lt]  <vdata  lt++
-		gt := right + 1                                   //arr[gt...right]>vdata   gt--
-		i := left + 1                                     // arr[lt+1, i] ==vdata   i++
+		It := left                                        // 左段arr[left+1,lt]  <vdata  lt++ 左边第二个值到it++的值小于vdata
+		gt := right + 1                                   //右段arr[gt...right]>vdata   gt--
+		i := left + 1                                     // 中间段arr[lt+1, i] ==vdata   i++
 
 		//	假如arr=4 7 8 9  4 1 2  3
 		//  i=1 vdata=arr[[left]]=4
@@ -101,7 +101,7 @@ func QuickSortFinal(arr []int, left int, right int) {
 
 		for i < gt { //循环到重合
 			if arr[i] > vdata {
-				SwapData(arr, i, It+1) //移动小于的地方
+				SwapData(arr, i, It+1) //移动小于的地方，从left的下一个元素开始，i=It+1时可以不变
 				It++
 				i++
 			} else if arr[i] < vdata { //吧最右边大于4的数字与最左边小于4的数交换
@@ -111,7 +111,7 @@ func QuickSortFinal(arr []int, left int, right int) {
 				i++ //相等
 			}
 		}
-		SwapData(arr, left, It)
+		SwapData(arr, left, It)         //相当于是left的值是  左段最大的 所以调换到后面 接下来递归
 		QuickSortFinal(arr, left, It-1) //递归处理左边
 		QuickSortFinal(arr, gt, right)  //递归处理右边
 	}
