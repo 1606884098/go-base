@@ -9,16 +9,15 @@ import (
 )
 
 //遍历文件夹
-func main1() {
+func ForReadDir() {
 	dir_list, _ := ioutil.ReadDir("Z:\\J\\洗币\\社会工程学\\52G葫芦娃")
 	for i, v := range dir_list {
 		fmt.Println(i, v.Name(), v.Size())
 	}
-
 }
 
 //遍历二级文件夹
-func main21() {
+func ForReadDirSecond() {
 	dir_list, _ := ioutil.ReadDir("Z:\\J\\洗币\\社会工程学\\52G葫芦娃")
 	for _, v := range dir_list {
 		dir_listx, _ := ioutil.ReadDir("Z:\\J\\洗币\\社会工程学\\52G葫芦娃" + "\\" + v.Name())
@@ -26,14 +25,10 @@ func main21() {
 			filepath := "Z:\\J\\洗币\\社会工程学\\52G葫芦娃" + "\\" + v.Name() + "\\" + u.Name()
 			fmt.Println(j, filepath)
 		}
-
 	}
-
 }
 
-//文件归并含义。
-//新建一个文件----每个文件读取一次，每行写入。
-
+//文件归并含义:新建一个文件----每个文件读取一次，每行写入。
 func main() {
 	savepath := "Z:\\J\\洗币\\社会工程学\\52G葫芦娃\\all163.txt"
 	savefile, err := os.Create(savepath) //创建文件
@@ -48,7 +43,6 @@ func main() {
 	for _, v := range dir_list {
 		dir_listx, _ := ioutil.ReadDir("Z:\\J\\洗币\\社会工程学\\52G葫芦娃" + "\\" + v.Name())
 		for j, u := range dir_listx {
-
 			filepath := "Z:\\J\\洗币\\社会工程学\\52G葫芦娃" + "\\" + v.Name() + "\\" + u.Name()
 			fmt.Println(filepath, "开始写入")
 			fi, err := os.Open(filepath)
@@ -67,10 +61,7 @@ func main() {
 			}
 			save.Flush()
 			fmt.Println(filepath, "写入成功", j)
-
 		}
-
 	}
 	save.Flush()
-
 }

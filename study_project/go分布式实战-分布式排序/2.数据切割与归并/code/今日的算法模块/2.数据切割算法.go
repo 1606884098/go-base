@@ -4,8 +4,8 @@ import "fmt"
 
 //100  10
 //97  10     10  10  10.。。。 7
-
-func evgSplit(num, N int) []int {
+//均等切割
+func evgSplitDamo(num, N int) []int {
 	arr := []int{}
 	if num%N == 0 {
 		for i := 0; i < N; i++ {
@@ -18,14 +18,13 @@ func evgSplit(num, N int) []int {
 			num -= evg
 		}
 		arr = append(arr, num) //7
-
 	}
 	return arr
 }
 func main() {
-	fmt.Println(evgSplit(100, 10))
-	fmt.Println(evgSplit(97, 10))
-	fmt.Println(evgSplit(106, 10))
-	fmt.Println(evgSplit(176, 10))
-	fmt.Println(evgSplit(576, 10))
+	fmt.Println(evgSplitDamo(100, 10))
+	fmt.Println(evgSplitDamo(97, 10))
+	fmt.Println(evgSplitDamo(106, 10))
+	fmt.Println(evgSplitDamo(176, 10))
+	fmt.Println(evgSplitDamo(576, 10))
 }

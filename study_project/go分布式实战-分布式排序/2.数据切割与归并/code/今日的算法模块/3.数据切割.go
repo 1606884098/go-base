@@ -26,6 +26,7 @@ func GetLineNumber(filepath string) int {
 	return i
 
 }
+
 func evgSplit(num, N int) []int {
 	arr := []int{}
 	if num%N == 0 {
@@ -44,6 +45,7 @@ func evgSplit(num, N int) []int {
 	return arr
 }
 
+//将大文件平均分成均等份然后写入文件中
 func main() {
 	filepath := "Z:\\E\\lastvedio5\\day1综合project练习\\chinaunix_com.txt"
 	N := GetLineNumber(filepath)
@@ -62,7 +64,7 @@ func main() {
 	filesavepath := "C:\\Users\\Tsinghua-yincheng\\Desktop\\day2\\data\\"
 	for i := 0; i < len(arrlist); i++ {
 		fmt.Println(i)
-		tmppath := filesavepath + "chinaunix" + strconv.Itoa(i) + ".txt"
+		tmppath := filesavepath + "chinaunix" + strconv.Itoa(i) + ".txt" //新文件名称
 		savefile, _ := os.Create(tmppath)
 		defer savefile.Close()
 		save := bufio.NewWriter(savefile)
