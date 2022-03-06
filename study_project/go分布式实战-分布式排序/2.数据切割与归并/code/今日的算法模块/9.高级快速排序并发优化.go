@@ -149,13 +149,6 @@ func makearr() []int {
 	return list
 }
 
-func main1() {
-
-	mylist := []int{2, 1, 9, 17, 8, 10}
-	mylist = BinSearchSortIndex(mylist, 3, 5)
-	fmt.Println(mylist)
-
-}
 func main() {
 
 	mylist := makearr()

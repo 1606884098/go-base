@@ -5,7 +5,7 @@ import "time"
 import "fmt"
 import "sync"
 
-func makearr() []int {
+func makeArrConcurrent() []int {
 	var length = 30
 	var list []int
 	r := rand.New(rand.NewSource(time.Now().UnixNano()))
@@ -22,7 +22,7 @@ func QuickGoSort(data []int) []int {
 	if len(data) <= 1 {
 		return data
 	} else {
-		var wg sync.WaitGroup //批量等待
+		var wg sync.WaitGroup //批量等待 法令枪
 		c := data[0]          //第一个数
 		var left, mid, right []int
 		mid = append(mid, c) //第一个数
@@ -66,7 +66,7 @@ func QuickGoSort(data []int) []int {
 }
 
 func main() {
-	data := makearr()
+	data := makeArrConcurrent()
 	fmt.Println(data)
 	fmt.Println(QuickGoSort(data))
 }

@@ -44,7 +44,7 @@ func Merge(left, right []int) []int {
 	return result
 }
 
-func makearr() []int {
+func makeArrMergeConcurrent() []int {
 	var length = 30
 	var list []int
 	r := rand.New(rand.NewSource(time.Now().UnixNano()))
@@ -77,7 +77,7 @@ func MergeSort(arr []int) []int {
 }
 
 func main() {
-	myarr := makearr()
+	myarr := makeArrMergeConcurrent()
 	fmt.Println(myarr)
 	fmt.Println(MergeSort(myarr))
 }
