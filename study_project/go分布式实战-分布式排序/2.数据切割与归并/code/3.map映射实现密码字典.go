@@ -22,10 +22,9 @@ import (
 // b  2
 // x  1
 //z  3
-
+//将密码作为键  次数作为值
 func LoadFile() map[string]int {
 	mymap := make(map[string]int)
-
 	fi, err := os.Open("Z:\\J\\洗币\\社会工程学\\52G葫芦娃\\all163_3.6pass.txt")
 	if err != nil {
 		fmt.Println("文件打开失败")
@@ -43,11 +42,10 @@ func LoadFile() map[string]int {
 		if v, ok := mymap[string(line)]; ok {
 			mymap[string(line)] = v + 1
 		} else {
-			mymap[string(line)] = 1
+			mymap[string(line)] = 1 //不存在次数为1
 		}
 
 	}
-
 	return mymap
 }
 
@@ -56,7 +54,7 @@ type Pass struct {
 	Times    int
 }
 
-func FindindexMid(list []Pass, start int, end int, cur int) int {
+func FindindexMidMap(list []Pass, start int, end int, cur int) int {
 	//对比当前位置与需要排序的元素大小，返回较大值的位置
 	if start >= end {
 		if list[start].Times > list[cur].Times {
@@ -69,19 +67,19 @@ func FindindexMid(list []Pass, start int, end int, cur int) int {
 
 	//二分查找递归
 	if list[mid].Times < list[cur].Times {
-		return FindindexMid(list, start, mid, cur)
+		return FindindexMidMap(list, start, mid, cur)
 	} else {
-		return FindindexMid(list, mid+1, end, cur)
+		return FindindexMidMap(list, mid+1, end, cur)
 	}
-
 }
-func BinSearchSort(mylist []Pass) []Pass {
+
+func BinSearchSortMap(mylist []Pass) []Pass {
 	if len(mylist) <= 1 {
 		return mylist
 	} else {
 		for i := 1; i < len(mylist); i++ {
-			p := FindindexMid(mylist, 0, i-1, i) //0,0,  0,1,  0,2,   0,3
-			if p != i {                          //不等，插入
+			p := FindindexMidMap(mylist, 0, i-1, i) //0,0,  0,1,  0,2,   0,3
+			if p != i {                             //不等，插入
 				for j := i; j > p; j-- {
 					mylist[j], mylist[j-1] = mylist[j-1], mylist[j] //数据移动
 				}
@@ -93,13 +91,13 @@ func BinSearchSort(mylist []Pass) []Pass {
 }
 
 //对制定数据段排序
-func BinSearchSortIndex(mylist []Pass, start int, end int) []Pass {
+func BinSearchSortIndexMap(mylist []Pass, start int, end int) []Pass {
 	if end-start <= 1 {
 		return mylist
 	} else {
 		for i := start + 1; i <= end; i++ {
-			p := FindindexMid(mylist, start, i-1, i) //0,0,  0,1,  0,2,   0,3
-			if p != i {                              //不等，插入
+			p := FindindexMidMap(mylist, start, i-1, i) //0,0,  0,1,  0,2,   0,3
+			if p != i {                                 //不等，插入
 				for j := i; j > p; j-- {
 					mylist[j], mylist[j-1] = mylist[j-1], mylist[j] //数据移动
 				}
@@ -109,11 +107,11 @@ func BinSearchSortIndex(mylist []Pass, start int, end int) []Pass {
 	}
 
 }
-func QuickSortCall(arr []Pass) []Pass {
+func QuickSortCallMap(arr []Pass) []Pass {
 	if len(arr) < 10 {
-		return BinSearchSort(arr)
+		return BinSearchSortMap(arr)
 	} else {
-		QuickSort(arr, 0, len(arr)-1)
+		QuickSortMap(arr, 0, len(arr)-1)
 		return arr
 	}
 }
@@ -122,24 +120,24 @@ func QuickSortCall(arr []Pass) []Pass {
 //123  4  697
 
 //数据交换
-func Swap(arr []Pass, i, j int) {
+func SwapMap(arr []Pass, i, j int) {
 	arr[i], arr[j] = arr[j], arr[i]
 }
 
 //快速排序，递归
-func QuickSort(arr []Pass, left int, right int) {
+func QuickSortMap(arr []Pass, left int, right int) {
 	if right-left < 10 {
-		BinSearchSortIndex(arr, left, right) //调用插入排序对于制定段排序
+		BinSearchSortIndexMap(arr, left, right) //调用插入排序对于制定段排序
 	} else {
 		//快速排序写法
 		//第一个，最后一个，随机抓取
 		// 4 123  4 789  10
 		//
-		Swap(arr, left, rand.Int()%(right-left)+left) //任何一个位置，交换到第一个
-		vdata := arr[left]                            //备份中间值
-		It := left                                    // arr[left+1,lt]  <vdata  lt++
-		gt := right + 1                               //arr[gt...right]>vdata   gt--
-		i := left + 1                                 // arr[lt+1, i] ==vdata   i++
+		SwapMap(arr, left, rand.Int()%(right-left)+left) //任何一个位置，交换到第一个
+		vdata := arr[left]                               //备份中间值
+		It := left                                       // arr[left+1,lt]  <vdata  lt++
+		gt := right + 1                                  //arr[gt...right]>vdata   gt--
+		i := left + 1                                    // arr[lt+1, i] ==vdata   i++
 
 		//	4 7 8 9  4 1 2  3
 		//  i=1 vdata=4
@@ -158,28 +156,28 @@ func QuickSort(arr []Pass, left int, right int) {
 
 		for i < gt { //循环到重合
 			if arr[i].Times > vdata.Times {
-				Swap(arr, i, It+1) //移动小于的地方
+				SwapMap(arr, i, It+1) //移动小于的地方
 				It++
 				i++
 
 			} else if arr[i].Times < vdata.Times { //吧最右边大于4的数字与最左边小于4的数交换
-				Swap(arr, i, gt-1)
+				SwapMap(arr, i, gt-1)
 				gt--
 
 			} else {
 				i++ //相等
 			}
 		}
-		Swap(arr, left, It)
+		SwapMap(arr, left, It)
 
 		var wg sync.WaitGroup
 		wg.Add(2)
 		go func() {
-			QuickSort(arr, left, It-1) //递归处理左边
+			QuickSortMap(arr, left, It-1) //递归处理左边
 			wg.Done()
 		}()
 		go func() {
-			QuickSort(arr, gt, right) //递归处理右边
+			QuickSortMap(arr, gt, right) //递归处理右边
 			wg.Done()
 		}()
 		wg.Wait()
@@ -193,7 +191,7 @@ func main() {
 	var N int = len(mymap)
 	alldata := make([]Pass, N, N)
 	i := 0
-	//map迁移到了mymap
+	//map迁移到了alldata
 	for k, v := range mymap {
 		alldata[i].PassWord = k
 		alldata[i].Times = v
@@ -205,7 +203,7 @@ func main() {
 	runtime.GC()
 	debug.FreeOSMemory()
 	//排序
-	alldata = QuickSortCall(alldata)
+	alldata = QuickSortCallMap(alldata)
 	fmt.Println("排序完成", len(alldata))
 	//保存结果
 	savefile, _ := os.Create("Z:\\J\\洗币\\社会工程学\\52G葫芦娃\\all163_3.6passtimes.txt")

@@ -116,7 +116,6 @@ func Merge(arr []string, filepath string) string {
 }
 
 func main() {
-
 	dir_list, _ := ioutil.ReadDir("C:\\Users\\Tsinghua-yincheng\\Desktop\\day2\\datasort\\")
 	filenames := []string{}
 	filepaths := []string{}

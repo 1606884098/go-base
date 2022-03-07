@@ -143,7 +143,7 @@ func QuickSort(arr []string, left int, right int) {
 	}
 }
 
-func GetLineNumber(filepath string) int {
+func GetLineNumberMerge1(filepath string) int {
 	fi, err := os.Open(filepath)
 	defer fi.Close() //打开文件
 	if err != nil {
@@ -197,7 +197,7 @@ func WritetoFile(path string, arr []string) {
 
 }
 func SortFile(oldpath, newpath string) {
-	var N = GetLineNumber(oldpath)
+	var N = GetLineNumberMerge1(oldpath)
 	dataarr := make([]string, N+1, N+1)
 	//读取文件到数组
 	ReadfiletoArr(oldpath, dataarr)
@@ -209,7 +209,6 @@ func SortFile(oldpath, newpath string) {
 	dataarr = nil
 	runtime.GC()
 	debug.FreeOSMemory()
-
 }
 
 //遍历文件夹

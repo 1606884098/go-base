@@ -8,7 +8,7 @@ import (
 	"strconv"
 )
 
-func GetLineNumber(filepath string) int {
+func GetLineNumberMerge(filepath string) int {
 	fi, err := os.Open(filepath)
 	defer fi.Close() //打开文件
 	if err != nil {
@@ -46,7 +46,7 @@ func evgSplit(num, N int) []int {
 
 func main() {
 	filepath := "Z:\\J\\洗币\\社会工程学\\52G葫芦娃\\all163_3.6pass.txt"
-	N := GetLineNumber(filepath)
+	N := GetLineNumberMerge(filepath)
 	fmt.Println(N)
 	var num = 7
 	arrlist := evgSplit(N, num) //数据切割为7份

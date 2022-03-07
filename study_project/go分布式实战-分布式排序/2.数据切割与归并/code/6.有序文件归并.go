@@ -8,7 +8,7 @@ import (
 	"fmt"
 )
 
-func GetLineNumber(filepath string) int {
+func GetLineNumberTestTwo(filepath string) int {
 	fi, err := os.Open(filepath)
 	defer fi.Close() //打开文件
 	if err != nil {
@@ -27,9 +27,9 @@ func GetLineNumber(filepath string) int {
 
 }
 
-func Mergre(path1, path2, pathsave string) {
-	length1 := GetLineNumber(path1)
-	length2 := GetLineNumber(path2) //文件的长度
+func MergreTestTwo(path1, path2, pathsave string) {
+	length1 := GetLineNumberTestTwo(path1)
+	length2 := GetLineNumberTestTwo(path2) //文件的长度
 	fi1, _ := os.Open(path1)
 	fi2, _ := os.Open(path2)
 	defer fi1.Close()
@@ -81,5 +81,5 @@ func main() {
 	path1 := "C:\\Users\\Tsinghua-yincheng\\Desktop\\day2\\datasort\\163-0.txt"
 	path2 := "C:\\Users\\Tsinghua-yincheng\\Desktop\\day2\\datasort\\163-1.txt"
 	pathsave := "C:\\Users\\Tsinghua-yincheng\\Desktop\\day2\\datasort\\last.txt"
-	Mergre(path1, path2, pathsave)
+	MergreTestTwo(path1, path2, pathsave)
 }
