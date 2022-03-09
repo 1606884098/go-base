@@ -64,13 +64,13 @@ func Server(conn net.Conn) {
 				conn.Write(mybstart)
 
 				for i := 0; i < len(myarr); i++ {
-					mybdata := IntToBytes(1)
+					mybdata := IntToBytesArr(1)
 					mybdata = append(mybdata, IntToBytesArr(myarr[i])...)
 					conn.Write(mybdata)
 				}
 
 				//结束
-				mybend := IntToBytes(0)
+				mybend := IntToBytesArr(0)
 				mybend = append(mybend, IntToBytesArr(1)...)
 				conn.Write(mybend)
 

@@ -4,22 +4,53 @@ import (
 	"bytes"
 	"encoding/binary"
 	"fmt"
+	"math"
 	"net"
 	"time"
 )
 
+//整数类型转换成字节
 func IntToBytes(n int) []byte {
-	data := int64(n)                                 //数据类型转换
+	data := int64(n)                                 //数据类型转换:为了网络精确都转换成int64
 	bytebuffer := bytes.NewBuffer([]byte{})          //字节集合
 	binary.Write(bytebuffer, binary.BigEndian, data) //按照二进制写入字节
 	return bytebuffer.Bytes()                        //返回字节结合
 }
 
+//字节转换成整数类型
 func BytesToInt(bs []byte) int {
 	bytebuffer := bytes.NewBuffer(bs) //根据二进制写入二进制结合
 	var data int64
 	binary.Read(bytebuffer, binary.BigEndian, &data) //解码
 	return int(data)
+}
+
+//浮点类型转换成字节
+func Float32ToBytes(data float32) []byte {
+	bits := math.Float32bits(data) //math方法，里面没有整数类型方法
+	bytes := make([]byte, 4)
+	binary.LittleEndian.PutUint32(bytes, bits) //填充
+	return bytes
+}
+
+//浮点类型转换成字节
+func Float64ToBytes(data float64) []byte {
+	bits := math.Float64bits(data) //math方法，里面没有整数类型方法
+	bytes := make([]byte, 8)
+	binary.LittleEndian.PutUint64(bytes, bits) //填充
+	return bytes
+}
+
+//字节转换成浮点类型
+func BytesToFloat32(bs []byte) float32 {
+	bits := binary.LittleEndian.Uint32(bs) //解码
+	return math.Float32frombits(bits)
+}
+
+//字节转换成浮点类型
+func BytesToFloat64(bs []byte) float64 {
+	bits := binary.LittleEndian.Uint64(bs) //解码
+	return math.Float64frombits(bits)
 }
 
 func main() {
@@ -40,7 +71,7 @@ func main() {
 		mybstart := IntToBytes(0)
 		mybstart = append(mybstart, IntToBytes(0)...)
 		conn.Write(mybstart)
-
+		//表示数据段
 		myarr := []int{1, 9, 2, 8, 3, 7, 6, 4, 5, 0}
 		for i := 0; i < len(myarr); i++ {
 			mybdata := IntToBytes(1)
