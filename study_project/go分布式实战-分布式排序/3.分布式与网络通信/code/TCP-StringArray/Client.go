@@ -8,14 +8,14 @@ import (
 	"time"
 )
 
-func IntToBytes(n int) []byte {
+func IntToBytesString(n int) []byte {
 	data := int64(n)                                 //数据类型转换
 	bytebuffer := bytes.NewBuffer([]byte{})          //字节集合
 	binary.Write(bytebuffer, binary.BigEndian, data) //按照二进制写入字节
 	return bytebuffer.Bytes()                        //返回字节结合
 }
 
-func BytesToInt(bs []byte) int {
+func BytesToIntString(bs []byte) int {
 	bytebuffer := bytes.NewBuffer(bs) //根据二进制写入二进制结合
 	var data int64
 	binary.Read(bytebuffer, binary.BigEndian, &data) //解码
@@ -39,20 +39,20 @@ func main() {
 
 		myarr := []string{"1", "9", "2", "8", "3", "7", "6", "4", "5", "0", "zxcvb", "asdsd", "bc"}
 		//开始
-		mybstart := IntToBytes(0)
-		mybstart = append(mybstart, IntToBytes(0)...)
+		mybstart := IntToBytesString(0)
+		mybstart = append(mybstart, IntToBytesString(0)...)
 		conn.Write(mybstart)
 
 		for i := 0; i < len(myarr); i++ {
-			mybdata := IntToBytes(3)
-			mybdata = append(mybdata, IntToBytes(len(myarr[i]))...)
+			mybdata := IntToBytesString(3)
+			mybdata = append(mybdata, IntToBytesString(len(myarr[i]))...)
 			conn.Write(mybdata)
 			conn.Write([]byte(myarr[i]))
 		}
 
 		//结束
-		mybend := IntToBytes(0)
-		mybend = append(mybend, IntToBytes(1)...)
+		mybend := IntToBytesString(0)
+		mybend = append(mybend, IntToBytesString(1)...)
 		conn.Write(mybend)
 	}()
 	arr := []string{}
@@ -66,8 +66,8 @@ func main() {
 		}
 
 		if n == 16 {
-			data1 := BytesToInt(buf[:len(buf)/2]) //取出第一个数
-			data2 := BytesToInt(buf[len(buf)/2:]) //取出第二个数
+			data1 := BytesToIntString(buf[:len(buf)/2]) //取出第一个数
+			data2 := BytesToIntString(buf[len(buf)/2:]) //取出第二个数
 
 			if data1 == 0 && data2 == 0 {
 				//开始
