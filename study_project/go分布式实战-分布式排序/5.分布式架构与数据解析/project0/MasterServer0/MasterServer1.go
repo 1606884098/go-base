@@ -18,8 +18,10 @@ func IntToBytes(n int) []byte {
 }
 
 func BytesToInt(bs []byte) int {
-	bytebuffer := bytes.NewBuffer(bs) //根据二进制
-	return bytebuffer
+	bytebuffer := bytes.NewBuffer(bs) //根据二进制写入二进制结合
+	var data int64
+	binary.Read(bytebuffer, binary.BigEndian, &data) //解码
+	return int(data)
 }
 
 func CheckError(err error) {

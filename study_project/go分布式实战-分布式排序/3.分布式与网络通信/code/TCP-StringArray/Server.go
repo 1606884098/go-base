@@ -44,7 +44,7 @@ func Server(conn net.Conn) {
 
 			if data1 == 0 && data2 == 0 {
 				//开始
-				arr = make([]string, 0, 0)
+				arr = make([]string, 0, 0) //为接收字符串数组做准备
 			}
 			if data1 == 3 {
 				//接收数组
