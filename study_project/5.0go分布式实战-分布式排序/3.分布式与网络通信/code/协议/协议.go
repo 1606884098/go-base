@@ -19,8 +19,6 @@ package main
 //5 整数，实数 ，字符串
 //5
 
-
-func main(){
-
+func main() {
 
 }
