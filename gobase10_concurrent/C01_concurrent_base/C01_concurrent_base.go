@@ -1,5 +1,6 @@
-package C01_concurrent_base
+package main
 
+//noinspection GoUnresolvedReference
 import (
 	"bufio"
 	"bytes"
@@ -11,7 +12,7 @@ import (
 	"os/exec"
 )
 
-func main1() {
+func main() {
 	//1.windows进程使用
 	createWindowsProcess() //创建进程
 	StdoutDo()
@@ -97,6 +98,7 @@ func pipeMathod() {
 }
 
 //gbk转utf8
+//noinspection ALL
 func GBKToUTF8(s []byte) ([]byte, error) {
 	reader := transform.NewReader(bytes.NewReader(s), simplifiedchinese.GBK.NewDecoder())
 	d, e := ioutil.ReadAll(reader)
@@ -107,6 +109,7 @@ func GBKToUTF8(s []byte) ([]byte, error) {
 }
 
 //utf8转gbk
+//noinspection ALL
 func UTF8ToGBK(s []byte) ([]byte, error) {
 	reader := transform.NewReader(bytes.NewReader(s), simplifiedchinese.GBK.NewEncoder())
 	d, e := ioutil.ReadAll(reader)

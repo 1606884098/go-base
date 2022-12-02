@@ -3,9 +3,11 @@ package main
 import "fmt"
 
 func main() {
-	/*	if 条件判断{
-		代码语句
-	}*/
+	/*
+		顺序结构，就是没有跳准直接从上往下执行
+		if 条件判断{
+			代码语句
+		}*/
 	if true {
 		fmt.Println("条件语句")
 	}
