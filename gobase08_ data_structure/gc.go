@@ -16,6 +16,12 @@ func entry() {
 	r := &rd
 	runtime.SetFinalizer(r, findRoad)
 }
+
+/*
+尽量使用栈上分配，尽量避免栈上分配变量发生逃逸
+go run -gcflags "-m -l" 文件名.go
+*/
+
 func main() {
 	entry()
 	for i := 0; i < 10; i++ {

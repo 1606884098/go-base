@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"io"
 	"os"
+	"time"
 )
 
 /*
@@ -34,4 +35,27 @@ func main() {
 	io.Copy(md5run2, file)               //拷贝数据
 	fmt.Printf("%x\n", md5run2.Sum(nil)) //计算hash值
 
+	Time() //程序段执行时间写法
+
+	println(fbn(4))
+}
+func Time() {
+	start := time.Now() // 获取当前时间
+	sum := 0
+	for i := 0; i < 100000000; i++ {
+		sum++
+	}
+	elapsed := time.Now().Sub(start)
+	fmt.Println("该函数执行完成耗时：", elapsed)
+}
+
+/*
+斐波那契数列 1,1,2,3,5,8,13...
+*/
+func fbn(a int) int {
+	if a == 1 || a == 2 {
+		return 1
+	} else {
+		return fbn(a-1) + fbn(a-2)
+	}
 }

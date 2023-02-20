@@ -1,23 +1,38 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"unsafe"
+)
 
+/*
+//slice是一个把go数组进行了包装的一个结构体，但是这个结构体只是在编译等其他层面能看到
+// 如果想在运行期间使用的话可以使用其对应的reflect结构体
+// 即reflect.SliceHeader
+type slice struct {src/runtime/slice
+array unsafe.Pointer //指向存放数据的数组指针
+len int //长度有多大
+cap int //容量有多大
+}
+*/
 func main() {
+
 	/*var 变量名 []类型*/
 	var dd []int
 	if dd == nil {
 		fmt.Printf("%p\n", dd) //没有分配内存0x0
 	}
-	var a []int = []int{1, 2, 3} //直接定义
-	fmt.Printf("%p\n", a)        //分配内存0xc000010380
 
-	b := []int{1, 2, 3} //直接定义
+	var a []int = []int{1, 2, 3} //直接定义
+	ptr := unsafe.Pointer(&a[0])
+	fmt.Printf("%p\n,%p\n", a, ptr) //分配内存0xc000010380
+	b := []int{1, 2, 3}             //直接定义
 	fmt.Printf("slice:%v,len=%v,cap=%v\n", b, len(b), cap(b))
 	var c []int = make([]int, 5) //长度(len)是5，容量(cap)也是5（这里的容量是值初始容量如果添加原始会自动扩容）
 
 	var d []int = make([]int, 5, 10) //长度(len)是5，容量(cap)是10
 
-	arr := [5]int{1, 2, 3, 4, 5} //通过数据定义
+	arr := [5]int{1, 2, 3, 4, 5} //通过数组定义
 	var e []int
 	e = arr[1:4] // 前包后不包
 	fmt.Println(a, b, c, d, e)
