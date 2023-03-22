@@ -1,4 +1,5 @@
 package main
+
 /*
 反射是指在程序运行期间对程序本身进行访问和修改的能力。
 程序在编译时，变量被转换为内存地址，变量名不会被编译器
@@ -11,13 +12,14 @@ Go语言中的变量是分为两部分的:
 reflect包
 在Go语言的反射机制中，任何接口值都由是一个具体类型和具体类型的值两部分组成的
 reflect包提供了reflect.TypeOf和reflect.ValueOf两个函数来获取任意对象的Value和Type。
- */
+*/
 import (
 	"fmt"
 	"reflect"
 )
 
 type myInt int64
+
 /*
 type name和type kind
 在反射中关于类型还划分为两种：类型（Type）和种类（Kind）。因为在Go语言中我们可以使用
@@ -56,11 +58,12 @@ const (
     Struct               // 结构体
     UnsafePointer        // 底层指针
 )
- */
+*/
 func reflectType(x interface{}) {
 	t := reflect.TypeOf(x)
 	fmt.Printf("type:%v kind:%v\n", t.Name(), t.Kind())
 }
+
 /*
 reflect.ValueOf()返回的是reflect.Value类型，其中包含了原始值的值信息。
 reflect.Value与原始值之间可以互相转换。
@@ -72,7 +75,7 @@ Float() float64	将值以双精度（float64）类型返回，所有浮点数（
 Bool() bool	将值以 bool 类型返回
 Bytes() []bytes	将值以字节数组 []bytes 类型返回
 String() string	将值以字符串类型返回
- */
+*/
 func reflectValue(x interface{}) {
 	v := reflect.ValueOf(x)
 	k := v.Kind()
@@ -88,10 +91,11 @@ func reflectValue(x interface{}) {
 		fmt.Printf("type is float64, value is %f\n", float64(v.Float()))
 	}
 }
+
 /*
 想要在函数中通过反射修改变量的值，需要注意函数参数传递的是值拷贝，必须传递变量地址才能修
 改变量值。而反射中使用专有的Elem()方法来获取指针对应的值。
- */
+*/
 func reflectSetValue1(x interface{}) {
 	v := reflect.ValueOf(x)
 	if v.Kind() == reflect.Int64 {
@@ -127,7 +131,6 @@ func main() {
 	reflectType(d) // type:person kind:struct
 	reflectType(e) // type:book kind:struct
 
-
 	var f float32 = 3.14
 	var g int64 = 100
 	reflectValue(f) // type is float32, value is 3.140000
@@ -142,16 +145,16 @@ func main() {
 	fmt.Println(i)
 
 	/*
-	isNil()和isValid():
-	IsNil()常被用于判断指针是否为空；IsValid()常被用于判定返回值是否有效。
+		isNil()和isValid():
+		IsNil()常被用于判断指针是否为空；IsValid()常被用于判定返回值是否有效。
 
-	func (v Value) IsNil() bool
-	IsNil()报告v持有的值是否为nil。v持有的值的分类必须是通道、函数、接口、映射、指针、
-	切片之一；否则IsNil函数会导致panic
-	unc (v Value) IsValid() bool
-	IsValid()返回v是否持有一个值。如果v是Value零值会返回假，此时v除了IsValid、String、
-	Kind之外的方法都会导致panic。
-	 */
+		func (v Value) IsNil() bool
+		IsNil()报告v持有的值是否为nil。v持有的值的分类必须是通道、函数、接口、映射、指针、
+		切片之一；否则IsNil函数会导致panic
+		unc (v Value) IsValid() bool
+		IsValid()返回v是否持有一个值。如果v是Value零值会返回假，此时v除了IsValid、String、
+		Kind之外的方法都会导致panic。
+	*/
 	// *int类型空指针
 	var j *int
 	fmt.Println("var a *int IsNil:", reflect.ValueOf(j).IsNil())
@@ -167,6 +170,4 @@ func main() {
 	l := map[string]int{}
 	// 尝试从map中查找一个不存在的键
 	fmt.Println("map中不存在的键：", reflect.ValueOf(l).MapIndex(reflect.ValueOf("娜扎")).IsValid())
-}
-
 }
